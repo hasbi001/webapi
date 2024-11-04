@@ -50,17 +50,18 @@
     <script>
       function InitializeData(){
         const url = 'http://localhost:8000/api/list';
-        $("#afterpage").val('FALSE');
-        $("#firstpage").val('TRUE');
+        // $("#afterpage").val('FALSE');
+        // $("#firstpage").val('TRUE');
+        $("#table tbody").empty();
         $.ajax({
             type: "POST",
             url: url,
             data: {
                 totalpage: $("#totalpage").val(),
-                beforepage: $("#beforepage").val(),
-                afterpage: $("#afterpage").val(),
-                firstpage: $("#firstpage").val(),
-                lastpage: $("#lastpage").val()
+                currentpage: $("#currentpage").val(),
+                action: 'init',
+                // firstpage: $("#firstpage").val(),
+                // lastpage: $("#lastpage").val()
             },
             dataType: "JSON",
             success: function (data) {
@@ -76,6 +77,7 @@
                         list = list+'<td>'+item.age+'</td>';
                     list = list+'</tr>';
                 });
+                $("#currentpage").val(data.page);
                 $("#table tbody").append(list);
             }
             
@@ -129,8 +131,8 @@
       
 	  function DoInitialize(){
  			InitializeData();
-        	InitializeUI();     
-            btnFirst_Click();
+        	// InitializeUI();     
+            // btnFirst_Click();
       }
 
       ///////////////////////////
@@ -140,17 +142,15 @@
 
       function btnFirst_Click(){
         const url = 'http://localhost:8000/api/list';
-        $("#afterpage").val('FALSE');
-        $("#firstpage").val('FALSE');
+        // $("#afterpage").val('FALSE');
+        // $("#firstpage").val('FALSE');
         $.ajax({
             type: "POST",
             url: url,
             data: {
                 totalpage: $("#totalpage").val(),
-                beforepage: 'TRUE',
-                afterpage: 'FALSE',
-                firstpage: $("#firstpage").val(),
-                lastpage: $("#lastpage").val()
+                currentpage: 0,
+                action: 'init',
             },
             dataType: "JSON",
             success: function (data) {
@@ -166,6 +166,7 @@
                         list = list+'<td>'+item.age+'</td>';
                     list = list+'</tr>';
                 });
+                $("#currentpage").val(0);
                 $("#table tbody").append(list);
             }
             
@@ -173,21 +174,14 @@
       }
 
       function btnPreviousPage_Click(){
-        $("#lastpage").val('FALSE');
-        $("#firstpage").val('FALSE');
-        var b = parseInt($("#beforepage").val())-2;
-        $("#beforepage").val(b);
-        var a = parseInt($("#afterpage").val())-2;
-        $("#afterpage").val(a);
+        const url = 'http://localhost:8000/api/list';
         $.ajax({
             type: "POST",
             url: url,
             data: {
                 totalpage: $("#totalpage").val(),
-                beforepage: b,
-                afterpage: a,
-                firstpage: $("#firstpage").val(),
-                lastpage: $("#lastpage").val()
+                currentpage: $("#currentpage").val(),
+                action: 'prevpage',
             },
             dataType: "JSON",
             success: function (data) {
@@ -203,6 +197,7 @@
                         list = list+'<td>'+item.age+'</td>';
                     list = list+'</tr>';
                 });
+                $("#currentpage").val(data.page);
                 $("#table tbody").append(list);
             }
             
@@ -210,21 +205,15 @@
       }
 
       function btnPrevious_Click(){
-        $("#lastpage").val('FALSE');
-        $("#firstpage").val('FALSE');
-        var b = parseInt($("#beforepage").val())-1;
-        $("#beforepage").val(b);
-        var a = parseInt($("#afterpage").val())-1;
-        $("#afterpage").val(a);
+        const url = 'http://localhost:8000/api/list';
+
         $.ajax({
             type: "POST",
             url: url,
             data: {
                 totalpage: $("#totalpage").val(),
-                beforepage: b,
-                afterpage: a,
-                firstpage: $("#firstpage").val(),
-                lastpage: $("#lastpage").val()
+                currentpage: $("#currentpage").val(),
+                action: 'prev',
             },
             dataType: "JSON",
             success: function (data) {
@@ -240,6 +229,7 @@
                         list = list+'<td>'+item.age+'</td>';
                     list = list+'</tr>';
                 });
+                $("#currentpage").val(data.page);
                 $("#table tbody").append(list);
             }
             
@@ -248,21 +238,14 @@
       }
       
       function btnNext_Click(){
-        $("#lastpage").val('FALSE');
-        $("#firstpage").val('FALSE');
-        var b = parseInt($("#beforepage").val())+1;
-        $("#beforepage").val(b);
-        var a = parseInt($("#afterpage").val())+1;
-        $("#afterpage").val(a);
+        const url = 'http://localhost:8000/api/list';
         $.ajax({
             type: "POST",
             url: url,
             data: {
                 totalpage: $("#totalpage").val(),
-                beforepage: b,
-                afterpage: a,
-                firstpage: $("#firstpage").val(),
-                lastpage: $("#lastpage").val()
+                currentpage: $("#currentpage").val(),
+                action: 'next',
             },
             dataType: "JSON",
             success: function (data) {
@@ -278,6 +261,7 @@
                         list = list+'<td>'+item.age+'</td>';
                     list = list+'</tr>';
                 });
+                $("#currentpage").val(data.page);
                 $("#table tbody").append(list);
             }
             
@@ -286,21 +270,14 @@
       }
       
       function btnNextPage_Click(){
-        $("#lastpage").val('FALSE');
-        $("#firstpage").val('FALSE');
-        var b = parseInt($("#beforepage").val())+2;
-        $("#beforepage").val(b);
-        var a = parseInt($("#afterpage").val())+2;
-        $("#afterpage").val(a);
+        const url = 'http://localhost:8000/api/list';
         $.ajax({
             type: "POST",
             url: url,
             data: {
                 totalpage: $("#totalpage").val(),
-                beforepage: b,
-                afterpage: a,
-                firstpage: $("#firstpage").val(),
-                lastpage: $("#lastpage").val()
+                currentpage: $("#currentpage").val(),
+                action: 'nextpage',
             },
             dataType: "JSON",
             success: function (data) {
@@ -316,6 +293,7 @@
                         list = list+'<td>'+item.age+'</td>';
                     list = list+'</tr>';
                 });
+                $("#currentpage").val(data.page);
                 $("#table tbody").append(list);
             }
             
@@ -323,6 +301,7 @@
       }
       
       function btnLast_Click(){
+        $("#table tbody").empty();
         const url = 'http://localhost:8000/api/list';
         $("#firstpage").val('FALSE');
         $("#lastpage").val('TRUE');
@@ -368,10 +347,10 @@
 </head>
 <body onload="DoInitialize()">
 <input type="hidden" id="totalpage" value="5" />
-<input type="hidden" id="beforepage" value="0" />
-<input type="hidden" id="afterpage" value="3" />
+<input type="hidden" id="current" value="0" />
+<!-- <input type="hidden" id="afterpage" value="3" />
 <input type="hidden" id="firstpage" value="TRUE" />
-<input type="hidden" id="lastpage" value="FALSE" />
+<input type="hidden" id="lastpage" value="FALSE" /> -->
 <span id="lblToday"></span>
 <Table id="table">
 	<thead>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Users;
 
@@ -94,40 +94,50 @@ class PenggunaController extends Controller
      */
     public function listpengguna(Request $request) {
         $totalpage = intval($request->totalpage);
-        $beforepage = intval($request->beforepage);
-        $afterpage = intval($request->beforepage);
-        $firstpage = $request->firstpage;
-        $lastpage = $request->lastpage;
-        $first = 0;
-        $last = 0;
-        $totaldata = Users::count();
-        if ($firstpage !== "TRUE" && $lastpage !== "TRUE") {
-            if ($beforepage == $afterpage) {
-                $page = $afterpage;
-            } elseif ($beforepage > $afterpage) {
-                $page = ($after-1)*$totalpage;
-            } else {
-                $page = ($before+1)*$totalpage;
-            }
+        $page = intval($request->currentpage);
+        $action = intval($request->action);
+
+        if ($action == 'next') {
+            $page += 1;
+        } elseif ($action == 'nextpage') {
+            $page += $totaldata;
+        } elseif ($action == 'prev') {
+            $page -= 1;
+        } elseif ($action == 'prevpage') {
+            $page -= $totaldata;
         }
-        else {
-            if ($firstpage == "TRUE") {
-                $page = 0;
-            }
-            else
-            {
-                $page = ceil($totaldata/$totalpage)*$totalpage;
-            }
-        }
+        // $firstpage = $request->firstpage;
+        // $lastpage = $request->lastpage;
+        // $first = 0;
+        // $last = 0;
+        // $totaldata = Users::count();
+        // if ($firstpage !== "TRUE" && $lastpage !== "TRUE") {
+        //     if ($beforepage == $afterpage) {
+        //         $page = $afterpage;
+        //     } elseif ($beforepage > $afterpage) {
+        //         $page = ($after-1)*$totalpage;
+        //     } else {
+        //         $page = ($before+1)*$totalpage;
+        //     }
+        // }
+        // else {
+        //     if ($firstpage == "TRUE") {
+        //         $page = 0;
+        //     }
+        //     else
+        //     {
+        //         $page = ceil($totaldata/$totalpage)*$totalpage;
+        //     }
+        // }
 
         // echo $page;
         // die();
         $data = [];
-        $model = Users::skip($page)->take($totalpage)->get();
+        $model = DB::select('SELECT * FROM table_user LIMIT '.$page.','.$totalpage);
         $index =0;
         foreach ($model as $key => $value) {
             if ($index <= 5) {
-                $data[$index]['no']=$index+$page+1;
+                $data[$index]['no']=$index+1;
                 $data[$index]['id']=$value->id;
                 $data[$index]['id']=$value->id;
                 $data[$index]['name']=$value->name;
@@ -148,12 +158,12 @@ class PenggunaController extends Controller
 
             $index++;
         }
-        if ($firstpage !== "TRUE" && $lastpage !== "TRUE") {
-            if ($beforepage != 0 && $afterpage != 0) {
-                unset($data[0]);
-                unset($data[1]);
-            }
-        }
-        return response()->json(['list'=>$data,'last'=>$totaldata/5]);
+        // if ($firstpage !== "TRUE" && $lastpage !== "TRUE") {
+        //     if ($beforepage != 0 && $afterpage != 0) {
+        //         unset($data[0]);
+        //         unset($data[1]);
+        //     }
+        // }
+        return response()->json(['list'=>$data,'page'=>$page]);
     }   
 }
