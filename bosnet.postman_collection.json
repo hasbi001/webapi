@@ -8,18 +8,15 @@
 	"item": [
 		{
 			"name": "list data",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
 						{
 							"key": "totalpage",
-							"value": "2",
+							"value": "5",
 							"type": "text"
 						},
 						{
@@ -29,7 +26,17 @@
 						},
 						{
 							"key": "afterpage",
-							"value": "2",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "firstpage",
+							"value": "FALSE",
+							"type": "text"
+						},
+						{
+							"key": "lastpage",
+							"value": "FALSE",
 							"type": "text"
 						}
 					]
@@ -44,6 +51,142 @@
 					"path": [
 						"api",
 						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "history transaction",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/bos/history",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"bos",
+						"history"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stor",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ammount\":350000,\r\n    \"currency_id\":\"IDR\",\r\n    \"origin_rek\": \"126000183791\",\r\n    \"destination_rek\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/bos/transaction/STOR",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"bos",
+						"transaction",
+						"STOR"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "200000",
+							"disabled": true
+						},
+						{
+							"key": "currency_id",
+							"value": "IDR",
+							"disabled": true
+						},
+						{
+							"key": "origin_rek",
+							"value": "126000183791",
+							"disabled": true
+						},
+						{
+							"key": "destination_rek",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transfer",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ammount\":50000,\r\n    \"currency_id\":\"IDR\",\r\n    \"origin_rek\": \"126000183791\",\r\n    \"destination_rek\":\"126000183781\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/bos/transaction/TRANSFER",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"bos",
+						"transaction",
+						"TRANSFER"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tarik",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ammount\":50000,\r\n    \"currency_id\":\"IDR\",\r\n    \"origin_rek\": \"126000183791\",\r\n    \"destination_rek\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/bos/transaction/TARIK",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"bos",
+						"transaction",
+						"TARIK"
 					]
 				}
 			},
