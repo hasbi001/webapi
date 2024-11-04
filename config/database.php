@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'sqlsrv'),
 
     /*
     |--------------------------------------------------------------------------
@@ -81,11 +81,11 @@ return [
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST_SQLSERVER', 'localhost'),
-            'port' => env('DB_PORT_SQLSERVER', '1434'),
-            'database' => env('DB_DATABASE_SQLSERVER', 'webapi'),
-            'username' => env('DB_USERNAME_SQLSERVER', 'root'),
-            'password' => env('DB_PASSWORD_SQLSERVER', 'admin'),
+            'host' => env('DB_HOST', 'localhost'),
+            'port' => env('DB_PORT', '1434'),
+            'database' => env('DB_DATABASE', 'webapi'),
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', 'admin'),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
