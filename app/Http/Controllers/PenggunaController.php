@@ -105,12 +105,17 @@ class PenggunaController extends Controller
             $page -= 1;
         } elseif ($action == 'prevpage') {
             $page -= $totaldata;
+        } elseif ($action == 'init') {
+            $page = 0;
+        } else {
+            $page = ceil(Users::count()/$totalpage)*$totalpage;
         }
+        
         // $firstpage = $request->firstpage;
         // $lastpage = $request->lastpage;
         // $first = 0;
         // $last = 0;
-        // $totaldata = Users::count();
+        
         // if ($firstpage !== "TRUE" && $lastpage !== "TRUE") {
         //     if ($beforepage == $afterpage) {
         //         $page = $afterpage;
