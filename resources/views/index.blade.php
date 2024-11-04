@@ -143,7 +143,7 @@
       function btnFirst_Click(){
         const url = 'http://localhost:8000/api/list';
         // $("#afterpage").val('FALSE');
-        // $("#firstpage").val('FALSE');
+        $("#table tbody").empty();
         $.ajax({
             type: "POST",
             url: url,
@@ -174,6 +174,7 @@
       }
 
       function btnPreviousPage_Click(){
+        $("#table tbody").empty();
         const url = 'http://localhost:8000/api/list';
         $.ajax({
             type: "POST",
@@ -206,7 +207,7 @@
 
       function btnPrevious_Click(){
         const url = 'http://localhost:8000/api/list';
-
+        $("#table tbody").empty();
         $.ajax({
             type: "POST",
             url: url,
@@ -238,6 +239,7 @@
       }
       
       function btnNext_Click(){
+        $("#table tbody").empty();
         const url = 'http://localhost:8000/api/list';
         $.ajax({
             type: "POST",
@@ -270,6 +272,7 @@
       }
       
       function btnNextPage_Click(){
+        $("#table tbody").empty();
         const url = 'http://localhost:8000/api/list';
         $.ajax({
             type: "POST",
@@ -303,17 +306,14 @@
       function btnLast_Click(){
         $("#table tbody").empty();
         const url = 'http://localhost:8000/api/list';
-        $("#firstpage").val('FALSE');
-        $("#lastpage").val('TRUE');
+        
         $.ajax({
             type: "POST",
             url: url,
             data: {
                 totalpage: $("#totalpage").val(),
-                beforepage: $("#beforepage").val(),
-                afterpage: $("#afterpage").val(),
-                firstpage: $("#firstpage").val(),
-                lastpage: $("#lastpage").val()
+                currentpage: $("#currentpage").val(),
+                action: 'last',
             },
             dataType: "JSON",
             success: function (data) {
@@ -329,6 +329,7 @@
                         list = list+'<td>'+item.age+'</td>';
                     list = list+'</tr>';
                 });
+                $("#currentpage").val(data.page);
                 $("#table tbody").append(list);
             }
             
