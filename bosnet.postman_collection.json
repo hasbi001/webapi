@@ -1,0 +1,53 @@
+{
+	"info": {
+		"_postman_id": "e182b6d1-2dfe-4253-b558-3a709cbdd6e3",
+		"name": "bosnet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12079598"
+	},
+	"item": [
+		{
+			"name": "list data",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "totalpage",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "beforepage",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "afterpage",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"list"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
